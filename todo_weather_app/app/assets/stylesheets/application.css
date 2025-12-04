@@ -1,10 +1,149 @@
 /*
  * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
+*/
+
+body {
+  background: #1E2A38;
+  color: #EAEAEA
+}
+
+.task-heading {
+  text-align: center;
+}
+
+.task-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 7.5em;
+}
+
+.task-card {
+  background: #2C3E50;
+  width: 50em;
+  border-radius: 0.88em;
+  padding: 1.25em;
+  box-shadow: 0 0.5em 1.5em rgba(0, 0, 0, 0.3);
+}
+
+.task-columns {
+  display: flex;
+  gap: 1.25em;
+}
+
+.task-column {
+  flex: 1;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.task-column::-webkit-scrollbar {
+  width: 4px;
+}
+
+.task-column::-webkit-scrollbar-thumb:hover {
+  background: #1E2A38;
+}
+
+.task-column h3 {
+  text-align: center;
+  background: #2C3E50;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/* Vertical divider */
+.task-column:first-child {
+  border-right: 2px solid #000000;
+  padding-right: 1.25em;
+}
+
+.task-column:last-child {
+  padding-left: 1.25em;
+}
+
+.add-task form {
+  display: flex;
+  gap: 0.625em;
+  margin-bottom: 1.25em;
+}
+
+.add-task input[type="text"] {
+  flex: 1;
+  padding: 0.5em 0.75em;
+  border-radius: 0.375em;
+  border: 2px solid #566574;
+  background: #EAEAEA;
+}
+
+.add-task input[type="submit"] {
+  background: #C64A25;
+  color: white;
+  border: none;
+  padding: 0.5em 1em;
+  border-radius: 0.375em;
+}
+
+.task-item {
+  background: #3A5068;
+  padding: 0.625em;
+  border-radius: 0.5em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.625em;
+}
+
+.task-complete-text {
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+
+.complete-checkbox {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid black;
+  background: transparent;
+  cursor: pointer;
+}
+
+.incomplete-checkbox {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid black;
+  background: transparent;
+  cursor: pointer;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  overflow: visible;
+  color: #C64A25;
+}
+
+.delete-task {
+  background: none;
+  border: none;
+  color: #FF6B6B;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+@media (max-width: 500px) {
+  .task-columns {
+    flex-direction: column;
+  }
+
+  .task-column:first-child {
+    max-height: none;
+    border-right: none;
+    padding: 0;
+  }
+
+  .task-column+.task-column {
+    margin-top: 1em;
+  }
+}

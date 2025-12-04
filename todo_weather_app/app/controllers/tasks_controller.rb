@@ -1,55 +1,34 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[ show edit update destroy ]
+  before_action :set_task, only: %i[ show destroy ]
 
-  # GET /tasks or /tasks.json
   def index
     @tasks = Task.all
     @todo_tasks = Task.where(completed: false).order(updated_at: :desc)
     @completed_tasks = Task.where(completed: true).order(updated_at: :desc)
   end
 
-  # GET /tasks/1 or /tasks/1.json
   def show
   end
 
-  # GET /tasks/new
   def new
     @task = Task.new
   end
 
-  # GET /tasks/1/edit
   def edit
   end
 
-  # POST /tasks or /tasks.json
   def create
     @task = Task.new(task_params)
 
     respond_to do |format|
       if @task.save
-        format.html { redirect_to @task, notice: "Task was successfully created." }
-        format.json { render :show, status: :created, location: @task }
+        redirect_to tasks_path, notice: "Task created."
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
+        redirect_to tasks_path, alert: "Task could not be created."
       end
     end
   end
 
-  # PATCH/PUT /tasks/1 or /tasks/1.json
-  def update
-    respond_to do |format|
-      if @task.update(task_params)
-        format.html { redirect_to @task, notice: "Task was successfully updated.", status: :see_other }
-        format.json { render :show, status: :ok, location: @task }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /tasks/1 or /tasks/1.json
   def destroy
     @task.destroy!
 
@@ -59,14 +38,24 @@ class TasksController < ApplicationController
     end
   end
 
+  def complete
+    @task = Task.find(params[:id])
+    @task.update(completed: true)
+    redirect_to tasks_path, notice: "Task marked complete."
+  end
+
+  def incomplete
+    @task = Task.find(params[:id])
+    @task.update(completed: false)
+    redirect_to tasks_path, notice: "Task marked incompleted."
+  end
+
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_task
-      @task = Task.find(params.expect(:id))
+      @task = Task.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def task_params
-      params.expect(task: [ :title, :description, :completed ])
+      params.require(:task).permit(:title).merge(completed: false)
     end
 end
