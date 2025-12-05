@@ -11,13 +11,11 @@
         <span data-weather-target="sunset">--:--</span>
       </span>
     </div>
-    
 
     <div class="task-heading"><h3>Task Manager</h3></div>
-
     <div class="add-task">
       <%= form_with(model: Task.new, url: tasks_path, data: { controller: "validation", action: "turbo:submit-end->validation#reset" }) do |f| %>
-        <%= f.text_field :title, placeholder: "Add a new task" %>
+        <%= f.text_field :title, placeholder: "Add a new task..." %>
         <%= f.submit "Add"%>
       <% end %>
     </div>
