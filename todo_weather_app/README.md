@@ -10,7 +10,7 @@ An web aaplication for managing tasks and displaying local weather information.
 1. Clone the repository.
 ```
 git clone git@github.com:mjnyn/mawande-intermediate-assessment.git
-cd todo_weather_app
+cd mawande-intermediate-assessment/todo_weather_app
 ```
 
 2. Create `.env` file.
