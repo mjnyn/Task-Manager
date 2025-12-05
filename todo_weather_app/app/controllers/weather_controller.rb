@@ -3,15 +3,26 @@ require "uri"
 require "json"
 
 class WeatherController < ApplicationController
-  # Makes the rest calls to the weather API. Placed inside the controller to ensure api key is hidden
   def weather
-    lat = params[:lat] || -33.91823523952793
-    lon = params[:lon] || 18.42535499728242
+    lat = params[:lat]
+    lon = params[:lon]
+    api_param = "#{lat},#{lon}"
+    api_param_backup = "Cape Town"
     api_key = Rails.application.credentials.weather_api_key
+    current_res = nil
+    astronomy_res = nil
 
-    current_res = fetch_cached_data("temp", "http://api.weatherapi.com/v1/current.json?key=#{api_key}&q=#{lat},#{lon}")
-    astronomy_res = fetch_cached_data("astro", "http://api.weatherapi.com/v1/astronomy.json?key=#{api_key}&q=#{lat},#{lon}")
+    begin
+      current_res = fetch_cached_data("temp", "http://api.weatherapi.com/v1/current.json?key=#{api_key}&q=#{api_param}")
+      astronomy_res = fetch_cached_data("astro", "http://api.weatherapi.com/v1/astronomy.json?key=#{api_key}&q=#{api_param}")
+    rescue
+      # I ran into at some point "{\"error\":{\"code\":1006,\"message\":\"No matching location found.\"}}"
+      # Thus falling back to a second param
+      current_res = fetch_cached_data("temp", "http://api.weatherapi.com/v1/current.json?key=#{api_key}&q=#{api_param_backup}")
+      astronomy_res = fetch_cached_data("astro", "http://api.weatherapi.com/v1/astronomy.json?key=#{api_key}&q=#{api_param_backup}")
+    end
 
+    Rails.logger.info("API #{current_res}")
     temp_c = JSON.parse(current_res)["current"]["temp_c"]
     sunrise = JSON.parse(astronomy_res)["astronomy"]["astro"]["sunrise"]
     sunset = JSON.parse(astronomy_res)["astronomy"]["astro"]["sunset"]
