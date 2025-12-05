@@ -20,34 +20,56 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
 
+    if @task.save
+      flash.now[:notice] = "Task created."
+    else
+      flash.now[:alert] = "Task not created. Ensure title is populated."
+    end
+
+    @todo_tasks = Task.where(completed: false).order(updated_at: :desc)
+    @completed_tasks = Task.where(completed: true).order(updated_at: :desc)
+
     respond_to do |format|
-      if @task.save
-        redirect_to tasks_path, notice: "Task created."
-      else
-        redirect_to tasks_path, alert: "Task could not be created."
-      end
+      format.turbo_stream
+      format.html { redirect_to tasks_path, notice: flash[:notice] || flash[:alert] }
     end
   end
 
   def destroy
     @task.destroy!
+    @todo_tasks = Task.where(completed: false).order(updated_at: :desc)
+    @completed_tasks = Task.where(completed: true).order(updated_at: :desc)
+    flash.now[:notice] = "Task deleted."
 
     respond_to do |format|
-      format.html { redirect_to tasks_path, notice: "Task was successfully destroyed.", status: :see_other }
-      format.json { head :no_content }
+      format.turbo_stream
+      format.html { redirect_to tasks_path, notice: flash[:notice] }
     end
   end
 
   def complete
     @task = Task.find(params[:id])
     @task.update(completed: true)
-    redirect_to tasks_path, notice: "Task marked complete."
+
+    @todo_tasks = Task.where(completed: false).order(updated_at: :desc)
+    @completed_tasks = Task.where(completed: true).order(updated_at: :desc)
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to tasks_path }
+    end
   end
 
   def incomplete
     @task = Task.find(params[:id])
     @task.update(completed: false)
-    redirect_to tasks_path, notice: "Task marked incompleted."
+    @todo_tasks = Task.where(completed: false).order(updated_at: :desc)
+    @completed_tasks = Task.where(completed: true).order(updated_at: :desc)
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to tasks_path }
+    end
   end
 
   private

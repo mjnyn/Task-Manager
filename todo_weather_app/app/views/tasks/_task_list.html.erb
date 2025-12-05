@@ -1,0 +1,32 @@
+<turbo-frame id="tasks">
+  <div class="task-columns">
+    <div class="task-column">
+      <h3>Todo</h3>
+      <% todo_tasks.each do |task| %>
+        <div class="task-item">
+          <%= button_to complete_task_path(task), method: :patch, class: "complete-checkbox", form: { data: { turbo_frame: "tasks" } } do %>
+          <% end %>
+          <span><%= task.title %></span>
+          <%= button_to task_path(task), method: :delete, class: "delete-task", form: { data: { turbo_frame: "tasks" } } do %>
+            ✘
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="task-column">
+      <h3>Completed</h3>
+      <% completed_tasks.each do |task| %>
+        <div class="task-item">
+          <%= button_to incomplete_task_path(task), method: :patch, class: "incomplete-checkbox",  form: { data: { turbo_frame: "tasks" } } do %>
+            ✓
+          <% end %>
+          <span class="task-complete-text"><%= task.title %></span>
+          <%= button_to task_path(task), method: :delete, class: "delete-task", form: { data: { turbo_frame: "tasks" } } do %>
+            ✘
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</turbo-frame>

@@ -1,0 +1,7 @@
+<%= turbo_stream.replace "tasks" do %>
+  <%= render partial: "tasks/task_list", locals: { todo_tasks: @todo_tasks, completed_tasks: @completed_tasks } %>
+<% end %>
+
+<%= turbo_stream.update "toaster-container" do %>
+  <%= render "tasks/toast" %>
+<% end %>
