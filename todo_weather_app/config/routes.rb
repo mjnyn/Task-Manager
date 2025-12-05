@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     end
   end
 
+  root "tasks#index"
+
   # last part is controller name and method name
   get "/weather", to: "weather#weather"
 end
