@@ -5,6 +5,7 @@ An web aaplication for managing tasks and displaying local weather information.
 ### Requirememts
 - Docker and docker compose installed.
 - .env file listing the master key.
+- PostgreSQL must be running locally.
 
 ### Setup
 1. Clone the repository.
@@ -36,3 +37,10 @@ bundle exec rspec --format documentation
 1. Weather **API key** is stored in rails credintials. Thus ensure you have the master key setup in your env file.
 2. Weather api data is **cached** for 1 hour to reduce the number of calls made. 
 3. If the browser can't find a geolocation within 5 seconds, default coordinates are used. Furthermore, if the supplied coordinates fail on the API side, default location name is used on retry.
+
+### Troubleshooting
+1. If you see `socket "/var/run/postgresql/.s.PGSQL.5432"?` related error. Ensure you have PostgreSQL running locally. You can start it using:
+```
+brew services start postgresql (mac)
+sudo systemctl start postgresql (linux)
+```
