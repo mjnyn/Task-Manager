@@ -1,6 +1,6 @@
 # Task Manager
 
-An web aaplication for managing tasks and displaying local weather information.
+A web application for managing tasks and displaying local weather information.
 
 ### Requirememts
 - Docker and docker compose installed.
@@ -10,8 +10,8 @@ An web aaplication for managing tasks and displaying local weather information.
 ### Setup
 1. Clone the repository.
 ```
-git clone git@github.com:mjnyn/mawande-intermediate-assessment.git
-cd mawande-intermediate-assessment/todo_weather_app
+git clone git@github.com:mjnyn/task-manager.git
+cd git@github.com:mjnyn/task-manager.git/todo_weather_app
 ```
 
 2. Create `.env` file.

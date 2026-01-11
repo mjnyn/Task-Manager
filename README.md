@@ -1,3 +1,3 @@
 # Task Manager
 
-An web aaplication for managing tasks and displaying local weather information. See main directory for more details.
+An web application for managing tasks and displaying local weather information. See main directory for more details.
