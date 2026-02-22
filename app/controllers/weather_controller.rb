@@ -22,7 +22,6 @@ class WeatherController < ApplicationController
       astronomy_res = fetch_cached_data("astro", "http://api.weatherapi.com/v1/astronomy.json?key=#{api_key}&q=#{api_param_backup}")
     end
 
-    Rails.logger.info("API #{current_res}")
     temp_c = JSON.parse(current_res)["current"]["temp_c"]
     sunrise = JSON.parse(astronomy_res)["astronomy"]["astro"]["sunrise"]
     sunset = JSON.parse(astronomy_res)["astronomy"]["astro"]["sunset"]
