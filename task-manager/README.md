@@ -11,7 +11,7 @@ A web application for managing tasks and displaying local weather information.
 1. Clone the repository.
 ```
 git clone git@github.com:mjnyn/task-manager.git
-cd git@github.com:mjnyn/task-manager.git/todo_weather_app
+cd task-manager
 ```
 
 2. Create `.env` file.
